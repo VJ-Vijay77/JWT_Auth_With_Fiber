@@ -7,5 +7,5 @@ import (
 
 func API(e *fiber.App) {
 	e.Get("/",controllers.Home)
-	e.Post("/",controllers.Register)
+	e.Post("/register",controllers.Register)
 }

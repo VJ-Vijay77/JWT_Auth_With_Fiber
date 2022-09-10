@@ -8,6 +8,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 )
+var DB *sqlx.DB
 
 type Database struct {
 	E *fiber.App
@@ -23,6 +24,7 @@ func ConnectDB() *Database {
 		log.Fatalln("Connection to postgresql Failed")
 
 	} 
+	DB = db
 
 	return &Database{
 		Db: db,
