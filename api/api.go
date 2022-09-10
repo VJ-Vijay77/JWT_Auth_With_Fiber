@@ -9,4 +9,6 @@ func API(e *fiber.App) {
 	e.Get("/",controllers.Home)
 	e.Post("/register",controllers.Register)
 	e.Post("/login",controllers.Login)
+	e.Get("/user",controllers.User)
+	e.Get("/logout",controllers.Logout)
 }
