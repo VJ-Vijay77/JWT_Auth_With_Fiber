@@ -8,4 +8,5 @@ import (
 func API(e *fiber.App) {
 	e.Get("/",controllers.Home)
 	e.Post("/register",controllers.Register)
+	e.Post("/login",controllers.Login)
 }

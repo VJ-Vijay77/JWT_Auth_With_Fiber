@@ -13,7 +13,7 @@ func Home(c *fiber.Ctx) error {
 func Register(c *fiber.Ctx) error {
 	var user models.User
 	c.BodyParser(&user)
-	_, err := db.DB.Exec("INSERT INTO users(name,email,password)VALUES($1,$2,$3)", "VIJAY", "vijay@gmai.com", "1")
+	_, err := db.DB.Exec("INSERT INTO users(name,email,password)VALUES($1,$2,$3)", user.Name,user.Email,user.Password)
 	if err != nil {
 		return c.JSON("Failed")
 	}
@@ -25,5 +25,32 @@ func Register(c *fiber.Ctx) error {
 
 
 func Login(c *fiber.Ctx) error {
-	return nil
+	var data models.User
+
+	if err := c.BodyParser(&data); err != nil{
+		return err
+	}
+	
+
+	var user models.User
+	 err := db.DB.Get(&user,"SELECT * FROM users WHERE email=$1",data.Email)
+	if err != nil{
+		c.Status(fiber.StatusNotFound)
+		return c.JSON(fiber.Map{
+			"message":"user not found",
+		})
+	}
+	
+
+	if data.Password != user.Password {
+		c.Status(fiber.StatusUnauthorized)
+		return c.JSON(fiber.Map{
+			"message":"wrong password",
+		})
+	}
+
+	return c.JSON(fiber.Map{
+		"status":"Login Success",
+		"user":user,
+	})
 }
