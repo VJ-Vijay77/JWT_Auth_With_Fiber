@@ -4,6 +4,7 @@ import (
 	"github.com/VJ-Vijay77/JWT_Auth_With_Fiber/db"
 	"github.com/VJ-Vijay77/JWT_Auth_With_Fiber/models"
 	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt/v4"
 )
 
 func Home(c *fiber.Ctx) error {
@@ -48,6 +49,9 @@ func Login(c *fiber.Ctx) error {
 			"message":"wrong password",
 		})
 	}
+
+
+	claims := jwt.NewWithClaims()
 
 	return c.JSON(fiber.Map{
 		"status":"Login Success",
